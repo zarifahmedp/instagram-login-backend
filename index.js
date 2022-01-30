@@ -1,5 +1,4 @@
 const express = require("express")
-const ObjectId = require('mongodb').ObjectId
 const cors = require("cors")
 const app = express()
 const port = process.env.PORT || 5000
@@ -16,7 +15,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 // Username : INSTAGRAMLOGIN
 // password : YutjmYTz70atajDq 
 
-// i am adding something i hope you are understanding 
 async function run() {
     try {
         await client.connect();
@@ -25,7 +23,7 @@ async function run() {
         const usersCollection = database.collection("usersCollection");
 
         // <<<--------------------Blogs------------------------>>> 
-        // [Post Blogs]
+        // [Post]
         app.post('/users', async (req, res) => {
             const newUsers = req.body
             console.log('hitting the user', newUsers);
@@ -34,7 +32,7 @@ async function run() {
             res.json(result)
         })
 
-        // [Get Blogs]
+        // [Get]
         app.get('/users', async (req, res) => {
             const cursor = usersCollection.find({})
             const users = await cursor.toArray()
@@ -53,6 +51,9 @@ app.get('/', (req, res) => {
     res.send('Instagram Login [Backend]')
 })
 
-app.listen(port, () => {
-    console.log('Running Instagram Login On Port:', port);
-})
+// app.listen(port, () => {
+//     console.log('Running Instagram Login On Port:', port);
+// })
+app.listen(process.env.PORT || 5000, function () {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
